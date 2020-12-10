@@ -1,3 +1,3 @@
 # self-hosted github runner 🎉
 
-Based on linux:alpine this is a lightweight container to be used as a github-runner for github actions
+This repository contains the docker recipe for our to-be self-hosted github-runner to run GitHub actions
