@@ -1,12 +1,12 @@
 FROM ubuntu:18.04
 
-# Set some default env variables for the user
 ENV GITHUB_TOKEN 'not-set'
 ENV GITHUB_REPO_URL 'not-set'
 ENV GITHUB_RUNNER_VERSION '2.272.0'
 
 RUN echo "create github user" && \
-    adduser --system --group github
+    adduser --system --group github && \
+    usermod -aG sudo github
 
 WORKDIR /home/github
 
@@ -18,9 +18,8 @@ RUN echo "install github-runner" && \
     tar xzf ./actions-runner-linux-x64-${GITHUB_RUNNER_VERSION}.tar.gz && \
     rm ./actions-runner-linux-x64-${GITHUB_RUNNER_VERSION}.tar.gz
 
-RUN echo "copy start script and give permission"
 COPY start.sh ./start.sh
-RUN chmod a+x ./start.sh ./config.sh ./run.sh
+RUN chown -R github:github /home/github
 
 USER github
 
